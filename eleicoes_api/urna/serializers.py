@@ -60,6 +60,21 @@ class VotoSerializer(serializers.ModelSerializer):
     def get_em_branco_display(self, obj):
         return 'BRANCO' if obj.em_branco else None
     
+class VotacaoInputSerializer(serializers.Serializer):
+    eleitor_id   = serializers.IntegerField()
+    eleicao_id   = serializers.IntegerField()
+    candidato_id = serializers.IntegerField(required=False, allow_null=True)
+    em_branco    = serializers.BooleanField(required=False, default=False)
+
+    def validate(self, data):
+        try:
+            eleicao = Eleicao.objects.get(pk=data['eleicao_id'])
+        except Eleicao.DoesNotExist:
+            raise serializers.ValidationError("Eleição não encontrada.")
+
+        if eleicao.status != StatusChoices.ABERTA:
+            raise serializers.ValidationError("A eleição não está aberta.")
+    
     
 
 
