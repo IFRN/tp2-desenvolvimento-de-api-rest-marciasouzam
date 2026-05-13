@@ -22,6 +22,7 @@ class EleicaoSerializer(serializers.ModelSerializer):
         return obj.aptos.count()
 
 class CandidatoSerializer(serializers.ModelSerializer):
+    eleicao_titulo = serializers.CharField(source='eleicao.titulo', read_only=True)
     class Meta:
         model = Candidato
         fields = '__all__'
@@ -34,11 +35,15 @@ class CandidatoSerializer(serializers.ModelSerializer):
             return value
 
 class AptidaoEleitorSerializer(serializers.ModelSerializer):
+    eleitor_nome = serializers.CharField(source='eleitor.nome', read_only=True)
+    eleicao_titulo = serializers.CharField(source='eleicao.titulo', read_only=True)
     class Meta:
         model = AptidaoEleitor
         fields = '__all__'
 
 class RegistroVotacaoSerializer(serializers.ModelSerializer):
+    eleitor_nome = serializers.CharField(source='eleitor.nome', read_only=True)
+    eleicao_titulo = serializers.CharField(source='eleicao.titulo', read_only=True)
     class Meta:
         model = RegistroVotacao
         fields = '__all__'
