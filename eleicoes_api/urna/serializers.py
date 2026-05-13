@@ -49,7 +49,15 @@ class RegistroVotacaoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class VotoSerializer(serializers.ModelSerializer):
+    candidato_nome_urna = serializers.CharField(source='candidato.nome_urna', read_only=True, allow_null=True)
+    em_branco_display = serializers.SerializerMethodField()
+    
     class Meta:
         model = Voto
         fields = '__all__'
+
+    def get_em_branco_display(self, obj):
+        return 'BRANCO' if obj.em_branco else None
+    
+    
 
