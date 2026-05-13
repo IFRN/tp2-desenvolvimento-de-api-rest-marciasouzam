@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from .models import (Eleitor, Eleicao, Candidato, AptidaoEleitor, RegistroVotacao, Voto)
+from .models import (Eleitor, Eleicao, Candidato, AptidaoEleitor, RegistroVotacao, Voto, StatusChoices, TipoChoices)
+  
 
 class EleitorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -60,4 +61,5 @@ class VotoSerializer(serializers.ModelSerializer):
         return 'BRANCO' if obj.em_branco else None
     
     
+
 
